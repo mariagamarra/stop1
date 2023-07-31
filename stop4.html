@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jogo de Stop</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #000;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background-color: #333;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      padding: 20px;
+      text-align: center;
+      color: #fff;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    .title {
+      font-size: 36px;
+      margin-bottom: 20px;
+      color: #e74c3c; /* Vermelho */
+    }
+
+    .letter {
+      font-size: 48px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #9b59b6; /* Roxo */
+    }
+
+    .categories-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      margin-top: 20px;
+      animation: fadeInCategories 1s ease-in-out;
+    }
+
+    .category {
+      font-size: 24px;
+      margin: 10px;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+      background-color: #3498db; /* Azul */
+      color: #fff;
+    }
+
+    .category:hover {
+      background-color: #ff0066; /* Rosa */
+    }
+
+    .animated-character {
+      width: 100px;
+      height: 100px;
+      background-color: #00FF00; /* Verde */
+      position: relative;
+      border-radius: 50%;
+      animation: bounce 1s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-20px);
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInCategories {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="title">Jogo de Stop</h1>
+    <div class="animated-character"></div>
+    <div class="letter" id="letterDisplay">-</div>
+    <div class="categories-container">
+      <div class="category" id="country">País</div>
+      <div class="category" id="fruit">Fruta</div>
+      <div class="category" id="animal">Animal</div>
+      <div class="category" id="color">Cor</div>
+      <div class="category" id="name">Nome</div>
+      <div class="category" id="profession">Profissão</div>
+      <div class="category" id="city">Cidade</div>
+      <div class="category" id="object">Objeto</div>
+    </div>
+    <button onclick="rollLetter()">Sortear Letra</button>
+    <div id="answersContainer" style="display: none;">
+      <h2>Respostas:</h2>
+      <div id="answers"></div>
+    </div>
+  </div>
+
+  <script>
+    function rollLetter() {
+      const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+      const randomIndex = Math.floor(Math.random() * letters.length);
+      const randomLetter = letters[randomIndex];
+      document.getElementById('letterDisplay').textContent = randomLetter;
+      document.getElementById('answersContainer').style.display = 'block';
+    }
+
+    function saveAnswer(categoryId) {
+      const categoryElement = document.getElementById(categoryId);
+      const answer = prompt(`Digite um item para a categoria "${categoryElement.textContent}" começando com a letra "${document.getElementById('letterDisplay').textContent}":`);
+      const answersDiv = document.getElementById('answers');
+      const answerElement = document.createElement('div');
+      answerElement.textContent = `${categoryElement.textContent}: ${answer || '-'}`;
+      answersDiv.appendChild(answerElement);
+    }
+
+    document.getElementById('country').addEventListener('click', () => saveAnswer('country'));
+    document.getElementById('fruit').addEventListener('click', () => saveAnswer('fruit'));
+    document.getElementById('animal').addEventListener('click', () => saveAnswer('animal'));
+    document.getElementById('color').addEventListener('click', () => saveAnswer('color'));
+    document.getElementById('name').addEventListener('click', () => saveAnswer('name'));
+    document.getElementById('profession').addEventListener('click', () => saveAnswer('profession'));
+    document.getElementById('city').addEventListener('click', () => saveAnswer('city'));
+    document.getElementById('object').addEventListener('click', () => saveAnswer('object'));
+  </script>
+</body>
+</html>
